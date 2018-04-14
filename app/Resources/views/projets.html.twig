@@ -1,0 +1,104 @@
+{% extends "base.html.twig" %}
+
+{% block js %}
+	<script src="{{ asset('assets/js/flickity.pkgd.min.js') }}"></script>
+{% endblock %}
+
+{% block css %}
+	<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/flickity.css') }}">
+{% endblock %}
+
+{% block body %}
+
+		<section id="divProjet">
+			<h1 class="centre">Nos <b>projets</b>	à venir</h1>
+			<div class="gallery js-flickity">
+        {% for projet in projets %}
+          {% if projet.fini == 0 %}
+           {% if projet.webPath %}
+      				<div class="gallery-cell">
+      					<img src="{{ asset(projet.webPath) }}" alt="{{ projet.titre }}"/>
+      				</div>
+            {% else %}
+              {# lien youtube #}
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+			</div>
+		</section>
+
+    <section id="divRea">
+  			<div class="row">
+  				<div class="col-md-12">
+  				<h1 class="centre">Nos <b>réalisations</b></h1>
+					<p>N'hésitez pas à cliquer sur les projets pour plus de détails.</p>
+  				<div class="grid">
+            {% for projet in projets %}
+              {% if projet.fini == 1 %}
+               {% if projet.webPath %}
+                 <figure class="effect-sarah">
+                   <img src="{{ asset(projet.webPath) }}" alt="{{ projet.titre }}"/>
+                   <figcaption>
+                     <h2>{{ projet.titre|raw }}</h2>
+                     <p>{{ projet.description|raw }}</p>
+                     <a href="" data-toggle="modal" data-target="#dialog{{ projet.id }}">Voir plus</a>
+                   </figcaption>
+                 </figure>
+                {% else %}
+                  {# lien youtube #}
+                {% endif %}
+              {% endif %}
+            {% endfor %}
+  					</div>
+  				</div>
+  			</div>
+  		</section>
+
+	  {% for projet in projets %}
+		<div class="modal fade" id="dialog{{ projet.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h3 class="modal-title" id="myModalLabel">{{ projet.titre }} <span class="sous-titre">{{ projet.date|date("m/d/Y") }}</span></h3>
+		      </div>
+		      <div class="modal-body">
+						<div class="container-fluid">
+							<div class="row">
+								<div class="col-sm-4">
+									{% if projet.webPath %}
+										<img src="{{ asset(projet.webPath) }}" alt="{{ projet.titre }}"/>
+									{% endif %}
+								</div>
+								<div class="col-sm-8">
+									<p>{{ projet.description }}</p>
+								</div>
+							</div>
+							<br>
+							{% for langage in projet.langages %}
+									<span class="badge">{{ langage.langage }}</span>
+							{% endfor %}
+						</div>
+		      </div>
+		      <div class="modal-footer">
+						<div>
+							Projet de type : {{ projet.type }}
+							<div class="membres">
+								{% for membre in projet.membres %}
+									<a href="">
+										<img src="
+											{% if membre.webPath %}
+												{{ asset(membre.webPath) }}
+											{% else %}
+												{{ asset('assets/img/logo.png') }}
+											{% endif %}
+										" alt="{{ membre.prenom }}-{{ membre.nom }}" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{ membre.prenom }}&nbsp;{{ membre.nom }}"/></a>
+								{% endfor %}
+							</div>
+						</div>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+  {% endfor %}
+{% endblock %}

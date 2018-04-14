@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+  	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  	<title>Digital Design | ISEN Brest</title>
+
+  	<meta name="description" content="Site web de Digital Design, association étudiante de l'ISEN Brest" />
+  	<meta name="keywords" content="design, isen, brest, association, web, css" />
+  	<meta name="author" content="Digital Design" />
+    <script type="text/javascript">var _paq=_paq||[];_paq.push(["setDomains",["*.digitaldesign.isenclub.fr"]]),_paq.push(["trackPageView"]),_paq.push(["enableLinkTracking"]),function(){var e="//piwik.isenclub.fr/";_paq.push(["setTrackerUrl",e+"piwik.php"]),_paq.push(["setSiteId",1]);var a=document,p=a.createElement("script"),i=a.getElementsByTagName("script")[0];p.type="text/javascript",p.async=!0,p.defer=!0,p.src=e+"piwik.js",i.parentNode.insertBefore(p,i)}();</script>
+
+  	<link rel="shortcut icon" href="{{ asset('assets/img/favicon.png') }}">
+    <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
+    {% stylesheets filter="scssphp" output="assets/css/app.css"
+      "assets/css/font-awesome.min.css"
+      "assets/scss/*.scss"
+    %}
+      <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+
+    {% block css %}{% endblock %}
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+
+    {% include "menu.html.twig" %}
+
+    <br/><br/><br/>
+
+    {% block body %}{% endblock %}
+
+    {% javascripts filter="?jsqueeze" output="assets/js/app.js"
+        "assets/js/jquery.min.js"
+        "assets/js/bootstrap.min.js"
+        "assets/js/modernizr.custom.js"
+        "assets/js/classie.js"
+        "assets/js/borderMenu.js"
+        "assets/js/spop.min.js"
+        "assets/js/script.js"
+    %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    {% block js %}{% endblock %}
+
+  </body>
+</html>
